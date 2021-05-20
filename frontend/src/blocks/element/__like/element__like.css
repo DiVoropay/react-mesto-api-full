@@ -1,0 +1,15 @@
+.element__like {
+  background-image: url('../../../images/element/like-disabled.svg');
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+  min-width: 22px;
+  height: 18px;
+}
+
+.element__like:focus {
+  outline-style: none;
+  opacity: .6;
+}

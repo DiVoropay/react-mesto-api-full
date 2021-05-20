@@ -1,0 +1,6 @@
+.profile__edit-avatar {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  position: relative;
+}

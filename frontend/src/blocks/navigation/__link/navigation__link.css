@@ -1,0 +1,16 @@
+.navigation__link {
+  margin: 0;
+  margin-left: 24px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.22;
+  text-decoration: none;
+  color: #000;
+}
+
+@media screen and (max-width: 700px) {
+  .navigation__link {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}
