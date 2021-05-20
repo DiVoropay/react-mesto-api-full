@@ -1,0 +1,8 @@
+.page-hover {
+  transition: opacity 0.4s ease;
+}
+
+.page-hover:hover {
+  cursor: pointer;
+  opacity: .6;
+}
