@@ -27,6 +27,22 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(requestLogger);
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+const allowedCors = [
+  'https://projectyp.nomoredomains.icu',
+  'localhost:3000'
+];
+
+app.use(function(req, res, next) {
+  const { origin } = req.headers;
+
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
+  next();
+});
+
 app.post('/signin', validateUserData, login);
 app.post('/signup', validateUserData, createUser);
 app.use('/users', validateAuth, auth, require('./routes/users'));
