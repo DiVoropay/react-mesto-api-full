@@ -76,9 +76,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+  baseUrl: 'https://api.projectyp.nomoredomains.icu',
   headers: {
-    authorization: '41f72902-7107-4ed8-b788-31083cbaf2ac',
     'Content-Type': 'application/json'
   }
 });
