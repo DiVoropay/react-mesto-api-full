@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { errors } = require('celebrate');
 
 const auth = require('./middlewares/auth');
@@ -26,24 +27,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(requestLogger);
 
-const allowedCors = [
-  'https://projectyp.nomoredomains.icu',
-  'http://projectyp.nomoredomains.icu',
-  'localhost:3000'
-];
-
-app.use(function(req, res, next) {
-  const { origin } = req.headers;
-  console.log(origin);
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-  }
-
-  next();
-});
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.post('/signin', validateUserData, login);

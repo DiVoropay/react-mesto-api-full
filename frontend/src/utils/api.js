@@ -76,7 +76,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.projectyp.nomoredomains.icu',
+  baseUrl: 'https://api.projectyp.nomoredomains.icu/',
   headers: {
     'Content-Type': 'application/json'
   }

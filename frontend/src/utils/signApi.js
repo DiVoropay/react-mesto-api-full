@@ -41,7 +41,7 @@ class SignApi {
 }
 
 const signApi = new SignApi({
-  baseUrl: 'https://api.projectyp.nomoredomains.icu',
+  baseUrl: 'http://api.projectyp.nomoredomains.icu/',
   headers: {
     "Content-Type": "application/json"
   }
