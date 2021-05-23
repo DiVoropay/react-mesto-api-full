@@ -137,7 +137,7 @@ function App() {
   const handleAuthorizationUser = (token) => {
     signApi.authorization(token)
       .then((data) => {
-        setEmailUser(data.data.email);
+        setEmailUser(data.email);
         setLoggedIn(true);
         history.push('./main');
       })
