@@ -2,6 +2,7 @@ const Card = require('../models/card');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
+    .populate(['owner', 'likes'])
     .then((cards) => res.send(cards))
     .catch((err) => next(err));
 };
@@ -11,19 +12,21 @@ module.exports.createCard = (req, res, next) => {
   const owner = req.user._id;
 
   Card.create({ name, link, owner })
+    .populate(['owner', 'likes'])
     .then((card) => res.send(card))
     .catch((err) => next(err));
 };
 
 module.exports.removeCard = (req, res, next) => {
   const { cardId } = req.params;
-  const currentUser = req.user._id;
+  const currentUser = req.user;
 
   Card.findById({ _id: cardId })
     .orFail(() => ({ name: 'EmptyData' }))
+    .populate(['owner', 'likes'])
     .then((card) => {
       const { owner } = card;
-      if (`${owner}` !== `${currentUser}`) {
+      if (`${owner._id}` !== `${currentUser._id}`) {
         const AccessError = { name: 'AccessError' };
         throw AccessError;
       }
@@ -36,28 +39,30 @@ module.exports.removeCard = (req, res, next) => {
 
 module.exports.likeCard = (req, res, next) => {
   const { cardId } = req.params;
-  const owner = req.user._id;
+  const owner = req.user;
 
   Card.findByIdAndUpdate(
     cardId,
-    { $addToSet: { likes: owner } },
+    { $addToSet: { likes: owner._id } },
     { new: true, runValidators: true },
   )
     .orFail(() => ({ name: 'EmptyData' }))
+    .populate(['owner', 'likes'])
     .then((card) => res.send(card))
     .catch((err) => next(err));
 };
 
 module.exports.dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
-  const owner = req.user._id;
+  const owner = req.user;
 
   Card.findByIdAndUpdate(
     cardId,
-    { $pull: { likes: owner } },
+    { $pull: { likes: owner._id } },
     { new: true, runValidators: true },
   )
     .orFail(() => ({ name: 'EmptyData' }))
+    .populate(['owner', 'likes'])
     .then((card) => res.send(card))
     .catch((err) => next(err));
 };
