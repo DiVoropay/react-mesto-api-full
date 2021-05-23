@@ -8,7 +8,7 @@ const NotFoundError = require('../errors/not-found-error');
 const ConflictDataError = require('../errors/conflict-data-error');
 const BadRequestError = require('../errors/bad-request-error');
 
-const { NODE_ENV, JWT_SECRET_KEY, JWT_EXPIRES_IN } = process.env;
+const { NODE_ENV, JWT_SECRET_KEY, JWT_EXPIRES_IN = '7d' } = process.env;
 const PASSWORD_VALIDITY = /\w{8,}/;
 
 module.exports.login = (req, res, next) => {
