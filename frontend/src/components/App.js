@@ -27,6 +27,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSuccessful, setIsSuccessful] = React.useState(false);
+  const [currentToken, setCurrentToken] = React.useState(false);
   const history = useHistory();
 
   const handleEditProfileClick = () => {
@@ -59,7 +60,7 @@ function App() {
   }
 
   const handleUpdateUser = (data) => {
-    api.setUserInfo(data)
+    api.setUserInfo(data, currentToken)
       .then((data) => {
         updateCurrentUser(data);
         closeAllPopups();
@@ -68,7 +69,7 @@ function App() {
   }
 
   const handleUpdateAvatar = (data) => {
-    api.setUserAvatar(data)
+    api.setUserAvatar(data, currentToken)
       .then((data) => {
         updateCurrentUser(data);
         closeAllPopups();
@@ -78,7 +79,7 @@ function App() {
 
 
   function handleCardLike(card, isLiked) {
-    api.changeLikeCardStatus(card._id, isLiked)
+    api.changeLikeCardStatus(card._id, isLiked, currentToken)
       .then((newCard) => {
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
       })
@@ -86,7 +87,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api.removeCard(card._id)
+    api.removeCard(card._id, currentToken)
       .then(() => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
@@ -94,7 +95,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(card) {
-    api.addCard(card)
+    api.addCard(card, currentToken)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -121,7 +122,8 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       handleAuthorizationUser(token);
-    }    
+    }
+    setCurrentToken(token);   
   }
 
   const handleLoginUser = (data) => {
@@ -154,7 +156,7 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    api.getPrifile()
+    api.getPrifile(currentToken)
       .then((data) => {
         updateCurrentUser(data);
       })
@@ -162,7 +164,7 @@ function App() {
   }, [loggedIn]);
 
   React.useEffect(() => {
-    api.getInitialCards()
+    api.getInitialCards(currentToken)
       .then((data) => {
         setCards(data);
       })
