@@ -27,7 +27,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSuccessful, setIsSuccessful] = React.useState(false);
-  const [currentToken, setCurrentToken] = React.useState(false);
+  const [currentToken, setCurrentToken] = React.useState('');
   const history = useHistory();
 
   const handleEditProfileClick = () => {
@@ -156,19 +156,23 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    api.getPrifile(currentToken)
+    if (loggedIn) {
+      api.getPrifile(currentToken)
       .then((data) => {
         updateCurrentUser(data);
       })
       .catch((err) => { console.log(`Ошибка: ${err}`) });
+    }
   }, [loggedIn]);
 
   React.useEffect(() => {
-    api.getInitialCards(currentToken)
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => { console.log(`Ошибка: ${err}`) });
+    if (loggedIn) {
+      api.getInitialCards(currentToken)
+        .then((data) => {
+          setCards(data);
+        })
+        .catch((err) => { console.log(`Ошибка: ${err}`) });
+    }
   }, [loggedIn]);
 
   return (
