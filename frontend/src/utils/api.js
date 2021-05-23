@@ -78,7 +78,8 @@ class Api {
 const api = new Api({
   baseUrl: 'https://api.projectyp.nomoredomains.icu',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem('token')
   }
 });
 
