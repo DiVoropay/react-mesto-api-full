@@ -4,6 +4,13 @@ class SignApi {
     this._headers = options.headers;
   }
 
+  _collectHeader(token) {
+    return {
+      ...this._headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }
+
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -15,7 +22,7 @@ class SignApi {
 
     return fetch(`${this._baseUrl}/users/me `, {
       method: 'GET',
-      headers: {...this._headers, 'Authorization': `Bearer ${token}`}
+      headers: this._collectHeader(token)
     })
       .then(this._checkResponse);
   }
@@ -41,7 +48,7 @@ class SignApi {
 }
 
 const signApi = new SignApi({
-  baseUrl: 'http://api.projectyp.nomoredomains.icu',
+  baseUrl: 'https://api.projectyp.nomoredomains.icu',
   headers: {
     "Content-Type": "application/json"
   }

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const path = require('path');
 const express = require('express');
 
@@ -30,6 +32,13 @@ app.use(requestLogger);
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', validateUserData, login);
 app.post('/signup', validateUserData, createUser);
 app.use('/users', validateAuth, auth, require('./routes/users'));
