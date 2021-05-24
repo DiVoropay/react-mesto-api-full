@@ -9,4 +9,6 @@
 **Ссылки:**
 - #### [Ссылка на GH React проекта - __Место__](https://github.com/DiVoropay/react-mesto-auth)
 
-- ### [Ссылка на опубликованный проект - __Место (full)__](https://projectyp.nomoredomains.icu)
+- ### [Ссылка на опубликованный проект - __Место (projectyp.nomoredomains.icu)__](https://projectyp.nomoredomains.icu)
+  - #### [Ссылка на API проекта - api.projectyp.nomoredomains.icu](https://api.projectyp.nomoredomains.icu)
+  - #### [IP адрес - 84.252.136.227](https://84.252.136.227)
