@@ -77,7 +77,11 @@ module.exports.createUser = (req, res, next) => {
             about,
             avatar,
           })
-            .then((userCreated) => res.send(userCreated))
+            .then((userCreated) => {
+              const userWithoutPassword = userCreated;
+              userWithoutPassword.password = undefined;
+              res.send(userWithoutPassword);
+            })
             .catch((err) => next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`)));
         })
         .catch(next);

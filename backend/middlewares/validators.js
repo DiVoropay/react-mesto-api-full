@@ -6,10 +6,13 @@ module.exports.validateAuth = celebrate({
   }).unknown(),
 });
 
-module.exports.validateUserData = celebrate({
+module.exports.validateUserId = celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    userId: Joi.string().hex().length(24).required(),
   }),
+});
+
+module.exports.validateUserData = celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required()
       .messages({
@@ -58,10 +61,13 @@ module.exports.validateUserAvatarData = celebrate({
   }),
 });
 
-module.exports.validateCardData = celebrate({
+module.exports.validateCardId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().alphanum().length(24),
+    cardId: Joi.string().hex().length(24).required(),
   }),
+});
+
+module.exports.validateCardData = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30)
       .messages({
@@ -71,7 +77,4 @@ module.exports.validateCardData = celebrate({
     link: Joi.string().pattern(/^http[s]?:\/\/[www.]*[\w-._~:/?#[\]@!$&'()*+,;=]+/)
       .rule({ message: 'Неправильный формат ссылки' }),
   }),
-  headers: Joi.object().keys({
-    authorization: Joi.string().pattern(/^Bearer [^\s]+/),
-  }).unknown(),
 });

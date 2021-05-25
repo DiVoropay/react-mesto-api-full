@@ -9,8 +9,9 @@ const { errors } = require('celebrate');
 
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
+const NotFoundError = require('./errors/not-found-error');
 const handlerErrors = require('./middlewares/handler-errors');
-const { validateAuth, validateUserData, validateCardData } = require('./middlewares/validators');
+const { validateAuth, validateUserData } = require('./middlewares/validators');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -42,10 +43,10 @@ app.get('/crash-test', () => {
 app.post('/signin', validateUserData, login);
 app.post('/signup', validateUserData, createUser);
 app.use('/users', validateAuth, auth, require('./routes/users'));
-app.use('/cards', validateAuth, auth, validateCardData, require('./routes/cards'));
+app.use('/cards', validateAuth, auth, require('./routes/cards'));
 
-app.use('/', (req, res) => {
-  res.status(404).send({ message: 'Страница не существует' });
+app.use('/', () => {
+  throw new NotFoundError('Страница не существует');
 });
 
 app.use(errorLogger);
