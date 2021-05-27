@@ -5,7 +5,6 @@ const AccessError = require('../errors/access-error');
 const BadRequestError = require('../errors/bad-request-error');
 
 const hendlerError = (err) => {
-  console.log(err);
   switch (err.name) {
     case 'ValidationError':
       return new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`);
