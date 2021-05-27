@@ -69,12 +69,12 @@ module.exports.validateCardId = celebrate({
 
 module.exports.validateCardData = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30)
+    name: Joi.string().min(2).max(30).required()
       .messages({
         'string.min': 'Минимальная длина поля "name" - 2',
         'string.max': 'Максимальная длина поля "name" - 30',
       }),
-    link: Joi.string().pattern(/^http[s]?:\/\/[www.]*[\w-._~:/?#[\]@!$&'()*+,;=]+/)
+    link: Joi.string().required().pattern(/^http[s]?:\/\/[www.]*[\w-._~:/?#[\]@!$&'()*+,;=]+/)
       .rule({ message: 'Неправильный формат ссылки' }),
   }),
 });
